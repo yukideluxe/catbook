@@ -9,6 +9,7 @@ Step by step implementation
 1. ``rails new catbook``
 2. Use rspec instead of minitest ``https://github.com/rspec/rspec-rails``
 3. Use factory_girl ``https://github.com/thoughtbot/factory_girl_rails``
+3. Use Postgres as default database ``http://guides.rubyonrails.org/configuring.html#configuring-a-database``
 
 References
 ----------
