@@ -3,6 +3,12 @@ CatBook powered by IronHack
 
 Because cats, as social beings, also deserve a place to share their experiences.
 
+Step by step implementation
+---------------------------
+
+1. ``rails new catbook``
+2. Using rspec instead of minitest ``https://github.com/rspec/rspec-rails``
+
 References
 ----------
 - Inspiration resources
