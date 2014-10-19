@@ -7,6 +7,8 @@ require 'faker'
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
 #
+
+# Is this the best place to put this kind of seeding?
 case Rails.env
 when "development"
   1000.times do |i|
