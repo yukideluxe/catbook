@@ -1,5 +1,28 @@
 <h1><%= raw @cat.name %></h1>
 
-<%= localize_date @cat.birthday %>
+<h2>Info</h2>
+
+<dl class="dl-horizontal">
+  <dt>Birthday</dt>
+  <dd><%= localize_date @cat.birthday %></dd>
+</dl>
+
+<%# Don't you see here some repetion? %>
+
+<h2>Following</h2>
+
+<ul>
+  <% @cat.followers.each do |follower| %>
+    <li><strong><%= follower.name %></strong></li>
+  <% end %>
+</ul>
+
+<h2>Followers</h2>
+
+<ul>
+  <% @cat.followed_by.each do |follower| %>
+    <li><strong><%= follower.name %></strong></li>
+  <% end %>
+</ul>
 
 <%= link_to "Back", cats_path %>
