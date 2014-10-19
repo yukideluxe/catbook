@@ -7,9 +7,15 @@ Step by step implementation
 ---------------------------
 
 1. ``rails new catbook``
-2. Use rspec instead of minitest ``https://github.com/rspec/rspec-rails``
-3. Use factory_girl ``https://github.com/thoughtbot/factory_girl_rails``
-3. Use Postgres as default database ``http://guides.rubyonrails.org/configuring.html#configuring-a-database``
+2. Use rspec instead of minitest - [Rspec](https://github.com/rspec/rspec-rails)
+3. Use factory_girl - [FactoryGirl](https://github.com/thoughtbot/factory_girl_rails)
+4. Use Postgres as default database - [Configuring a Database - Rails Guides](http://guides.rubyonrails.org/configuring.html#configuring-a-database)
+5. Basic cat model ``rails generate model cat``
+6. Seed development database with fake data ``rake db:seed``
+7. Bower and boostrap - [Bower](https://github.com/42dev/bower-rails)
+8. Create basic scaffold for listing, editing and showing cats
+  - Security pitfalls are on purpose included here in order the students to find them
+  - Included kaminari pagination - [Kaminari](https://github.com/amatsuda/kaminari)
 
 References
 ----------

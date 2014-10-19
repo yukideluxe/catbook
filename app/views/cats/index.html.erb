@@ -1,0 +1,22 @@
+<h1>Listing cats</h1>
+
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Birthday</th>
+      <th>Options</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @cats.each do |cat| %>
+      <tr>
+        <td><%= link_to raw(cat.name), cat_path(cat) %></td>
+        <td><%= localize_date cat.birthday %></td>
+        <td><%= link_to "Edit", edit_cat_path(cat) %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<%= paginate @cats %>

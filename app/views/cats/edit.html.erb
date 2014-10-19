@@ -1,0 +1,22 @@
+<h1>Edit :: <%= @cat.name %></h1>
+
+<% if @cat.errors.any? %>
+  <ul>
+    <% @cat.errors.full_messages.each do |msg| %>
+      <li><%= msg %></li>
+    <% end %>
+  </ul>
+<% end %>
+
+<%= form_for @cat do |c| %>
+  <div class="form-group">
+    <%= c.label :name, "Cat name" %>
+    <%= c.text_field :name, placeholder: "Ej. Marramiau", class: "form-control" %>
+  </div>
+  <div class="form-group">
+    <%= c.label :birthday, "Birthday" %>
+    <%= c.date_field :birthday, class: "form-control" %>
+  </div>
+
+  <%= c.submit "Edit cat info!", class: "btn btn-default" %>
+<% end %>
