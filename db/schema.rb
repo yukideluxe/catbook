@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141019081925) do
+ActiveRecord::Schema.define(version: 20141019102334) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -22,6 +22,13 @@ ActiveRecord::Schema.define(version: 20141019081925) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.boolean  "visible",    default: true
+  end
+
+  create_table "follower_relations", force: true do |t|
+    t.integer  "cat_id"
+    t.integer  "followed_cat_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
 end

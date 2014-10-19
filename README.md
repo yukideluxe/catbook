@@ -16,6 +16,7 @@ Step by step implementation
 8. Create basic scaffold for listing, editing and showing cats
   - Security pitfalls are on purpose included here in order the students to find them
   - Included kaminari pagination - [Kaminari](https://github.com/amatsuda/kaminari)
+9. Introduce sightly advanced association ``FollowerRelation`` - [FrontMatter rails tutorial](https://www.railstutorial.org/book/frontmatter)
 
 References
 ----------

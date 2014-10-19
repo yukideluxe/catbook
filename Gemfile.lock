@@ -37,6 +37,13 @@ GEM
       coffee-script-source
       execjs
     coffee-script-source (1.8.0)
+    columnize (0.8.9)
+    debugger (1.6.8)
+      columnize (>= 0.3.1)
+      debugger-linecache (~> 1.2.0)
+      debugger-ruby_core_source (~> 1.3.5)
+    debugger-linecache (1.2.0)
+    debugger-ruby_core_source (1.3.5)
     diff-lcs (1.2.5)
     erubis (2.7.0)
     execjs (2.2.2)
@@ -138,6 +145,7 @@ PLATFORMS
 DEPENDENCIES
   bower-rails
   coffee-rails (~> 4.0.0)
+  debugger
   factory_girl_rails
   faker
   jbuilder (~> 2.0)
