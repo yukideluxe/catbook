@@ -46,10 +46,25 @@ class CatsController < ApplicationController
   # Where would you move it?
   def load_cat_of_the_month
     last_month_follower_relation = FollowerRelation.where("EXTRACT(MONTH FROM created_at) = ? AND EXTRACT(YEAR FROM created_at) = ?", 1.month.ago.month, 1.month.ago.year)
+
+    # First alternative
+    # Retrieve results from database without order and use ruby function to order hash
     count_of_followers = last_month_follower_relation.group(:followed_cat_id).count
     # http://www.rubyinside.com/how-to/ruby-sort-hash
     cat_of_the_month_data = count_of_followers.sort_by { |k, v| -v }.first
-
     @cat_of_the_month = Cat.find(cat_of_the_month_data.first) if cat_of_the_month_data
+
+    # # Second alternative
+    # # Order the results with SQL query an retrieve one result
+    # # I just googled "Order by group by count" to find this solution
+    # cat_of_month_id = last_month_follower_relation.
+    #   group(:followed_cat_id).
+    #   select("followed_cat_id, COUNT(*) as followers_count").
+    #   order("followers_count DESC").
+    #   limit(1).first.try(:followed_cat_id)
+    #
+    # # http://apidock.com/rails/Object/try
+    #
+    # @cat_of_the_month = Cat.find(cat_of_month_id) if cat_of_month_id
   end
 end
