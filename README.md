@@ -17,6 +17,8 @@ Step by step implementation
   - Security pitfalls are on purpose included here in order the students to find them
   - Included kaminari pagination - [Kaminari](https://github.com/amatsuda/kaminari)
 9. Introduce sightly advanced association ``FollowerRelation`` - [FrontMatter rails tutorial](https://www.railstutorial.org/book/frontmatter)
+10. Do 'heavy' queries to render followers in cats#show and cats#index
+11. Generate rake task to seed followers ``rails g task catbook seed_follower_relations`` (Note: Could be also done in the seeds but to show you an example of rake task)
 
 References
 ----------
