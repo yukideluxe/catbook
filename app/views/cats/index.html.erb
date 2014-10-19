@@ -1,12 +1,19 @@
 <h1>Listing cats</h1>
 
+<% if @cat_of_the_month %>
+  <h2>Cat with more followers last month</h2>
+  <p>
+    <%= link_to @cat_of_the_month.name, cat_path(@cat_of_the_month) %>
+  </p>
+<% end %>
+
 <table class="table table-striped">
   <thead>
     <tr>
       <th>Name</th>
       <th>Birthday</th>
       <th>Followers count</th>
-      <th>Followed by count<th>
+      <th>Followed by count</th>
       <th>Options</th>
     </tr>
   </thead>
