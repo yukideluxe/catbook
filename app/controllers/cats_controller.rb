@@ -1,6 +1,7 @@
 class CatsController < ApplicationController
   skip_before_action :verify_authenticity_token
 
+  before_action :load_cat_of_the_month, only: :index
   before_action :load_cat, except: :index
 
   def index
@@ -39,5 +40,16 @@ class CatsController < ApplicationController
 
   def cats_params
     { visible: true }.merge(params[:cat])
+  end
+
+  # Do you think this is a good place to put this logic?
+  # Where would you move it?
+  def load_cat_of_the_month
+    last_month_follower_relation = FollowerRelation.where("EXTRACT(MONTH FROM created_at) = ? AND EXTRACT(YEAR FROM created_at) = ?", 1.month.ago.month, 1.month.ago.year)
+    count_of_followers = last_month_follower_relation.group(:followed_cat_id).count
+    # http://www.rubyinside.com/how-to/ruby-sort-hash
+    cat_of_the_month_data = count_of_followers.sort_by { |k, v| -v }.first
+
+    @cat_of_the_month = Cat.find(cat_of_the_month_data.first) if cat_of_the_month_data
   end
 end

@@ -21,6 +21,25 @@ RSpec.describe CatsController, type: :controller do
 
       expect(assigns(:cats)).to match_array([visible_cat, other_visible_cat])
     end
+
+    it "loads cats with more followers last month into @cat_of_the_month" do
+      cat = create(:cat)
+      create(:follower_relation, followed: cat, created_at: 1.month.ago)
+      create(:follower_relation, followed: cat, created_at: 1.month.ago)
+
+      other_cat = create(:cat)
+      create(:follower_relation, followed: other_cat, created_at: 1.month.ago)
+
+      # This cat has more followers but were created this month!
+      an_other_cat = create(:cat)
+      create(:follower_relation, followed: an_other_cat, created_at: Date.today)
+      create(:follower_relation, followed: an_other_cat, created_at: Date.today)
+      create(:follower_relation, followed: an_other_cat, created_at: Date.today)
+
+      get :index
+
+      expect(assigns(:cat_of_the_month)).to eq(cat)
+    end
   end
 
   describe "GET #show" do
