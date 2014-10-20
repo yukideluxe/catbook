@@ -18,6 +18,7 @@ class CatsController < ApplicationController
 
   def update
     if @cat.update(cats_params)
+      # http://guides.rubyonrails.org/action_controller_overview.html#the-flash
       flash[:notice] = "Cat updated successfully"
 
       redirect_to cat_path(@cat)
