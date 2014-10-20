@@ -6,6 +6,9 @@ Rails.application.routes.draw do
 
   resources :cats, only: [:index, :show, :edit, :update]
 
-  get "/register", to: "registrations#new"
+  get  "/register", to: "registrations#new"
   post "/register", to: "registrations#create"
+
+  post   "/login",  to: "login#create"
+  delete "/logout", to: "login#destroy"
 end
