@@ -1,5 +1,8 @@
+# http://api.rubyonrails.org/classes/ActiveModel/SecurePassword/ClassMethods.html
 class Cat < ActiveRecord::Base
-  validates :name, presence: true, length: { in: 2..255 }
+  has_secure_password
+
+  validates :name, :email, presence: true, length: { in: 2..255 }
 
   scope :visible, -> { where(visible: true) }
   scope :hidden,  -> { where(visble: false) }
