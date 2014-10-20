@@ -1,5 +1,6 @@
-# http://api.rubyonrails.org/classes/ActiveModel/SecurePassword/ClassMethods.html
 class Cat < ActiveRecord::Base
+  # http://api.rubyonrails.org/classes/ActiveModel/SecurePassword/ClassMethods.html
+  # http://stackoverflow.com/questions/10139954/does-has-secure-password-use-any-form-of-salting
   has_secure_password
 
   validates :name, :email, presence: true, length: { in: 2..255 }
