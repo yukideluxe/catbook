@@ -19,13 +19,15 @@
   </thead>
   <tbody>
     <% @cats.each do |cat| %>
-      <tr>
-        <td><%= link_to raw(cat.name), cat_path(cat) %></td>
-        <td><%= localize_date cat.birthday %></td>
-        <td><%= cat.followers.count %></td>
-        <td><%= cat.followed_by.count %></td>
-        <td><%= link_to "Edit", edit_cat_path(cat) %></td>
-      </tr>
+      <% cache(cat) do %>
+        <tr>
+          <td><%= link_to cat.name, cat_path(cat) %></td>
+          <td><%= localize_date cat.birthday %></td>
+          <td><%= cat.followers.count %></td>
+          <td><%= cat.followed_by.count %></td>
+          <td><%= link_to "Edit", edit_cat_path(cat) %></td>
+        </tr>
+      <% end %>
     <% end %>
   </tbody>
 </table>
