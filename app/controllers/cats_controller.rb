@@ -57,6 +57,7 @@ class CatsController < ApplicationController
       count_of_followers = last_month_follower_relation.group(:followed_cat_id).count
       # http://www.rubyinside.com/how-to/ruby-sort-hash
       cat_of_the_month_data = count_of_followers.sort_by { |k, v| -v }.first
+
       Cat.find(cat_of_the_month_data.first) if cat_of_the_month_data
     end
 
