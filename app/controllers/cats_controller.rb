@@ -1,6 +1,4 @@
 class CatsController < ApplicationController
-  skip_before_action :verify_authenticity_token
-
   before_action :load_cat_of_the_month, only: :index
   before_action :load_cat, except: :index
 
@@ -9,7 +7,7 @@ class CatsController < ApplicationController
 
     # page scope is provided by kamikari gem
     # https://github.com/amatsuda/kaminari/blob/master/lib/kaminari/models/active_record_model_extension.rb#L13
-    @cats = Cat.visible.select(:id, :name, :birthday).page(page)
+    @cats = Cat.visible.order("id ASC").page(page)
   end
 
   def show
@@ -33,13 +31,13 @@ class CatsController < ApplicationController
   private
 
   def load_cat
-    @cat = Cat.where("id = #{params[:id]}").visible.first
-
-    render text: 'Not Found', status: '404' unless @cat
+    @cat = Cat.visible.find(params[:id])
+  rescue ActiveRecord::RecordNotFound
+    render text: 'Not Found', status: 404
   end
 
   def cats_params
-    { visible: true }.merge(params[:cat])
+    params.require(:cat).permit(:name, :birthday)
   end
 
   # Do you think this is a good place to put this logic?
