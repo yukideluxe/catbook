@@ -37,14 +37,20 @@
   </thead>
   <tbody>
     <% @cats.each do |cat| %>
-      <% cache(cat) do %>
-        <tr>
-          <td><%= link_to cat.name, cat_path(cat) %></td>
-          <td><%= localize_date cat.birthday %></td>
-          <td><%= cat.followers.count %></td>
-          <td><%= cat.followed_by.count %></td>
-          <td><%= link_to "Edit", edit_cat_path(cat) %></td>
-        </tr>
+      <% if policy(cat).show? %>
+          <tr>
+            <% cache(cat) do %>
+              <td><%= link_to cat.name, cat_path(cat) %></td>
+              <td><%= localize_date cat.birthday %></td>
+              <td><%= cat.followers.count %></td>
+              <td><%= cat.followed_by.count %></td>
+            <% end %>
+            <td>
+              <% if policy(cat).edit? %>
+                <%= link_to "Edit", edit_cat_path(cat) %>
+              <% end %>
+            </td>
+          </tr>
       <% end %>
     <% end %>
   </tbody>
