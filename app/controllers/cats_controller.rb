@@ -1,4 +1,7 @@
 class CatsController < ApplicationController
+  # http://api.rubyonrails.org/classes/ActiveSupport/Rescuable/ClassMethods.html
+  rescue_from Pundit::NotAuthorizedError, with: :deny_access
+
   include Pundit
 
   before_action :load_cat_of_the_month, only: :index
@@ -77,5 +80,11 @@ class CatsController < ApplicationController
     # # http://apidock.com/rails/Object/try
     #
     # @cat_of_the_month = Cat.find(cat_of_month_id) if cat_of_month_id
+  end
+
+  def deny_access
+    # http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html
+    # http://apidock.com/rails/ActionController/Base/render#254-List-of-status-codes-and-their-symbols
+    render text: "Your are not authorized to perform this action", status: :unauthorized
   end
 end
