@@ -48,6 +48,8 @@ class CatsController < ApplicationController
     current_time       = Time.now
     date_of_expiration = current_time.end_of_month - current_time
 
+    # You could also use Rails.cache.read and Rails.cache.write! Review the documentation :)
+
     @cat_of_the_month = Rails.cache.fetch("cat_of_the_month", expires_in: date_of_expiration) do
       # First alternative
       # Retrieve results from database without order and use ruby function to order hash
