@@ -1,5 +1,14 @@
 <h1>Listing cats</h1>
 
+<% if loggedin_cat %>
+  <h2>Hello <%= loggedin_cat.name %></h2>
+  <%# http://edgeguides.rubyonrails.org/working_with_javascript_in_rails.html %>
+  <%= link_to "Logout", logout_path, method: :delete, confirm: 'Logout?', remote: true %>
+<% else %>
+  <%# http://guides.rubyonrails.org/layouts_and_rendering.html#using-partials %>
+  <%= render "login_form" %>
+<% end %>
+
 <% if @cat_of_the_month %>
   <h2>Cat with more followers last month</h2>
   <p>
