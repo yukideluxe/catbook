@@ -16,4 +16,7 @@
 /tmp
 
 # Bower components
-/vendor/assets/bower_components/*
+/vendor/assets/bower_components
+
+# Public assets
+/public/assets
