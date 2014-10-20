@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141019102334) do
+ActiveRecord::Schema.define(version: 20141020171248) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -30,5 +30,8 @@ ActiveRecord::Schema.define(version: 20141019102334) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  add_index "follower_relations", ["cat_id"], name: "index_follower_relations_on_cat_id", using: :btree
+  add_index "follower_relations", ["followed_cat_id"], name: "index_follower_relations_on_followed_cat_id", using: :btree
 
 end
