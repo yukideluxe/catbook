@@ -28,12 +28,19 @@ RSpec.describe LoginController, type: :controller do
   describe "DELETE #destroy" do
     let(:cat) { create(:cat, email: "email@email.com", password: "password") }
 
-    it "clears user session and redirects to cats_path" do
+    it "clears user session and redirects to cats_path (JS FORMAT)" do
       session[:loggedin_cat_id] = cat
 
       delete :destroy, format: :js
       expect(session[:loggedin_cat_id]).to be nil
       expect(response.body).to eq("window.location.href='#{cats_path}'")
+    end
+
+    it "clears user session and redirects to cats_path (HTML FORMAT)" do
+      session[:loggedin_cat_id] = cat
+
+      delete :destroy
+      expect(response).to redirect_to(cats_path)
     end
   end
 end

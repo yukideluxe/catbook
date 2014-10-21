@@ -19,7 +19,8 @@ class LoginController < ApplicationController
     session[:loggedin_cat_id] = nil
 
     respond_to do |format|
-      format.js { render js: "window.location.href='#{cats_path}'" }
+      format.html { redirect_to cats_path }
+      format.js   { render js: "window.location.href='#{cats_path}'" }
     end
   end
 end
