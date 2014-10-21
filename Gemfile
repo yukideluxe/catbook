@@ -40,6 +40,8 @@ gem 'pundit'
 
 gem 'whenever'
 
+gem 'delayed_job_active_record'
+
 # Use unicorn as the app server
 # gem 'unicorn'
 

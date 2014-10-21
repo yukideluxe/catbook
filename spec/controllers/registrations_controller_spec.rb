@@ -32,6 +32,10 @@ RSpec.describe RegistrationsController, type: :controller do
     end
 
     it "send welcome email after cat creation" do
+      # Ignoring delayed jobs in order to deliver the email
+      # http://stackoverflow.com/questions/6352333/rails-rspec-testing-delayed-job-mails
+      Delayed::Worker.delay_jobs = false
+
       post :create, cat: { name: "Name", email: "email@email.com", password: "password", password_confirmation: "password" }
 
       last_cat = Cat.last
