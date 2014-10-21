@@ -25,6 +25,23 @@
   </p>
 <% end %>
 
+<div id="api-data-response">
+  <%= link_to "Perfom api request", "#", id: "api-data-perform-link" %>
+</div>
+
+<script>
+  $("#api-data-perform-link").click(function() {
+    $.ajax({
+      url: '<%= api_v1_cats_path %>',
+      data: { offset: 1, limit: 1 },
+      dataType: "json"
+    }).done(function(response) {
+      $("#api-data-response").html(JSON.stringify(response));
+    });
+  });
+</script>
+
+
 <table class="table table-striped">
   <thead>
     <tr>
