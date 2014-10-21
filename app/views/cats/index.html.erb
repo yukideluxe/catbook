@@ -7,6 +7,7 @@
   </p>
 <% end %>
 
+
 <table class="table table-striped">
   <thead>
     <tr>
@@ -14,18 +15,23 @@
       <th>Birthday</th>
       <th>Followers count</th>
       <th>Followed by count</th>
+      <th>Email</th>
       <th>Options</th>
     </tr>
   </thead>
   <tbody>
     <% @cats.each do |cat| %>
-      <tr>
-        <td><%= link_to raw(cat.name), cat_path(cat) %></td>
-        <td><%= localize_date cat.birthday %></td>
-        <td><%= cat.followers.count %></td>
-        <td><%= cat.followed_by.count %></td>
-        <td><%= link_to "Edit", edit_cat_path(cat) %></td>
-      </tr>
+      <% cache(cat) do %>
+        <tr>
+          <td><%= link_to cat.name, cat_path(cat) %></td>
+          <td><%= localize_date cat.birthday %></td>
+          <td><%= cat.followers.count %></td>
+          <td><%= cat.followed_by.count %></td>
+          <td><%= cat.email%></td>
+          <td><%= link_to "Edit", edit_cat_path(cat) %> | 
+              <%= link_to "Delete", cat_path(cat), method: :delete %></td>
+        </tr>
+      <% end %>
     <% end %>
   </tbody>
 </table>

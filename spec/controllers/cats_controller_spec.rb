@@ -23,6 +23,8 @@ RSpec.describe CatsController, type: :controller do
     end
 
     it "loads cats with more followers last month into @cat_of_the_month" do
+      Rails.cache.delete('cat_of_the_month')
+
       cat = create(:cat)
       create(:follower_relation, followed: cat, created_at: 1.month.ago)
       create(:follower_relation, followed: cat, created_at: 1.month.ago)

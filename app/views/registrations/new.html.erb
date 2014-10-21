@@ -1,0 +1,43 @@
+<h1>Register</h1>
+
+  <% if @cat.errors.any? %>
+    <div id="error_explanation">
+      <ul>
+      <% @cat.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+<p>
+  <%= form_for @cat, url: register_path do |f| %>
+    <p>
+      <%= f.label :name %>
+      <%= f.text_field :name %>
+    </p>
+    <p>
+      <%= f.label :birthday %>
+      <%= f.date_field :birthday %>
+    </p>
+    <p>
+      <%= f.label :email %>
+      <%= f.text_field :email %>
+    </p>
+
+    <p>
+      <%= f.label :password %>
+      <%= f.password_field :password %>
+    </p>
+
+    <p>
+      <%= f.label :password_confirmation %>
+      <%= f.password_field :password_confirmation %>
+    </p>
+
+    <p>
+      <%= f.submit "Register" %>
+    </p>
+  <% end %>
+
+</p>

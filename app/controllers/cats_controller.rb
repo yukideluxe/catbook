@@ -1,15 +1,14 @@
 class CatsController < ApplicationController
-  skip_before_action :verify_authenticity_token
-
   before_action :load_cat_of_the_month, only: :index
   before_action :load_cat, except: :index
+
 
   def index
     page  = params[:page].to_i || 1
 
     # page scope is provided by kamikari gem
     # https://github.com/amatsuda/kaminari/blob/master/lib/kaminari/models/active_record_model_extension.rb#L13
-    @cats = Cat.visible.select(:id, :name, :birthday).page(page)
+    @cats = Cat.visible.order("id ASC").page(page)
   end
 
   def show
@@ -20,6 +19,7 @@ class CatsController < ApplicationController
 
   def update
     if @cat.update(cats_params)
+      # http://guides.rubyonrails.org/action_controller_overview.html#the-flash
       flash[:notice] = "Cat updated successfully"
 
       redirect_to cat_path(@cat)
@@ -30,16 +30,22 @@ class CatsController < ApplicationController
     end
   end
 
+  def destroy
+    cat= Cat.find(params[:id])
+    @cat.destroy
+    redirect_to root_path
+  end
+
   private
 
   def load_cat
-    @cat = Cat.where("id = #{params[:id]}").visible.first
-
-    render text: 'Not Found', status: '404' unless @cat
+    @cat = Cat.visible.find(params[:id])
+  rescue ActiveRecord::RecordNotFound
+    render text: 'Not Found', status: 404
   end
 
   def cats_params
-    { visible: true }.merge(params[:cat])
+    params.require(:cat).permit(:name, :birthday)
   end
 
   # Do you think this is a good place to put this logic?
@@ -47,12 +53,20 @@ class CatsController < ApplicationController
   def load_cat_of_the_month
     last_month_follower_relation = FollowerRelation.where("EXTRACT(MONTH FROM created_at) = ? AND EXTRACT(YEAR FROM created_at) = ?", 1.month.ago.month, 1.month.ago.year)
 
-    # First alternative
-    # Retrieve results from database without order and use ruby function to order hash
-    count_of_followers = last_month_follower_relation.group(:followed_cat_id).count
-    # http://www.rubyinside.com/how-to/ruby-sort-hash
-    cat_of_the_month_data = count_of_followers.sort_by { |k, v| -v }.first
-    @cat_of_the_month = Cat.find(cat_of_the_month_data.first) if cat_of_the_month_data
+    current_time       = Time.now
+    date_of_expiration = current_time.end_of_month - current_time
+
+    # You could also use Rails.cache.read and Rails.cache.write! Review the documentation :)
+
+    @cat_of_the_month = Rails.cache.fetch("cat_of_the_month", expires_in: date_of_expiration) do
+      # First alternative
+      # Retrieve results from database without order and use ruby function to order hash
+      count_of_followers = last_month_follower_relation.group(:followed_cat_id).count
+      # http://www.rubyinside.com/how-to/ruby-sort-hash
+      cat_of_the_month_data = count_of_followers.sort_by { |k, v| -v }.first
+
+      Cat.find(cat_of_the_month_data.first) if cat_of_the_month_data
+    end
 
     # # Second alternative
     # # Order the results with SQL query an retrieve one result
