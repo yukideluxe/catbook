@@ -154,10 +154,10 @@ RSpec.describe CatsController, type: :controller do
   end
 
   def login(cat)
-    session[:loggedin_cat_id] = cat.id
+    session[:current_cat_id] = cat.id
   end
 
   def logout
-    session[:loggedin_cat_id] = nil
+    session[:current_cat_id] = nil
   end
 end
