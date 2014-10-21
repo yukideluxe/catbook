@@ -2,8 +2,17 @@
 
 <% if loggedin_cat %>
   <h2>Hello <%= loggedin_cat.name %></h2>
-  <%# http://edgeguides.rubyonrails.org/working_with_javascript_in_rails.html %>
-  <%= link_to "Logout", logout_path, method: :delete, confirm: 'Logout?', remote: true %>
+  <p>
+    AJAX
+    <br>
+    <%# http://edgeguides.rubyonrails.org/working_with_javascript_in_rails.html %>
+    <%= link_to "Logout", logout_path, method: :delete, confirm: 'Logout?', remote: true %>
+  </p>
+  <p>
+    Non AJAX
+    <br>
+    <%= render "logout_form" %>
+    </p>
 <% else %>
   <%# http://guides.rubyonrails.org/layouts_and_rendering.html#using-partials %>
   <%= render "login_form" %>
