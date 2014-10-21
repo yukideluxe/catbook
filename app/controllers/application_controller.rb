@@ -9,7 +9,7 @@ class ApplicationController < ActionController::Base
   def loggedin_cat
     loggedin_cat_id = session[:loggedin_cat_id]
     if loggedin_cat_id
-      Cat.find(loggedin_cat_id)
+      @loggedin_cat ||= Cat.find(loggedin_cat_id)
     end
   end
 
