@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141020175732) do
+ActiveRecord::Schema.define(version: 20141021180707) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -27,6 +27,14 @@ ActiveRecord::Schema.define(version: 20141020175732) do
   end
 
   add_index "cats", ["email"], name: "index_cats_on_email", unique: true, using: :btree
+
+  create_table "cron_example_tables", force: true do |t|
+    t.datetime "current_time"
+  end
+
+  create_table "cron_examples", force: true do |t|
+    t.datetime "current_time"
+  end
 
   create_table "follower_relations", force: true do |t|
     t.integer  "cat_id"
