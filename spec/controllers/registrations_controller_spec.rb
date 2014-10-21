@@ -31,6 +31,18 @@ RSpec.describe RegistrationsController, type: :controller do
       expect(last_cat.authenticate("password")).to be last_cat
     end
 
+    it "send welcome email after cat creation" do
+      post :create, cat: { name: "Name", email: "email@email.com", password: "password", password_confirmation: "password" }
+
+      last_cat = Cat.last
+
+      welcome_email = ActionMailer::Base.deliveries.last
+      expect(welcome_email.from).to match_array(["catbook@esdeluxe.com"])
+      expect(welcome_email.to).to match_array([last_cat.email])
+      expect(welcome_email.subject).to eq("Welcome to CatBook! Miauuuuu")
+      expect(welcome_email.to_s).to match(/Welcome to CatBook, #{last_cat.name}!/)
+    end
+
     it "renders new template if validation errors" do
       post :create, cat: { email: "email@email.com", password: "password", password_confirmation: "password" }
 
