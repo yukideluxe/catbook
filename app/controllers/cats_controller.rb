@@ -1,4 +1,9 @@
 class CatsController < ApplicationController
+  # http://api.rubyonrails.org/classes/ActiveSupport/Rescuable/ClassMethods.html
+  rescue_from Pundit::NotAuthorizedError, with: :deny_access
+
+  include Pundit
+
   before_action :load_cat_of_the_month, only: :index
   before_action :load_cat, except: :index
 
@@ -7,16 +12,20 @@ class CatsController < ApplicationController
 
     # page scope is provided by kamikari gem
     # https://github.com/amatsuda/kaminari/blob/master/lib/kaminari/models/active_record_model_extension.rb#L13
-    @cats = Cat.visible.order("id ASC").page(page)
+    @cats = policy_scope(Cat).order("id ASC").page(page)
   end
 
   def show
+    authorize @cat
   end
 
   def edit
+    authorize @cat
   end
 
   def update
+    authorize @cat
+
     if @cat.update(cats_params)
       # http://guides.rubyonrails.org/action_controller_overview.html#the-flash
       flash[:notice] = "Cat updated successfully"
@@ -32,13 +41,11 @@ class CatsController < ApplicationController
   private
 
   def load_cat
-    @cat = Cat.visible.find(params[:id])
-  rescue ActiveRecord::RecordNotFound
-    render text: 'Not Found', status: 404
+    @cat = Cat.find(params[:id])
   end
 
   def cats_params
-    params.require(:cat).permit(:name, :birthday)
+    params.require(:cat).permit(:name, :birthday, :visible)
   end
 
   # Do you think this is a good place to put this logic?
@@ -73,5 +80,11 @@ class CatsController < ApplicationController
     # # http://apidock.com/rails/Object/try
     #
     # @cat_of_the_month = Cat.find(cat_of_month_id) if cat_of_month_id
+  end
+
+  def deny_access
+    # http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html
+    # http://apidock.com/rails/ActionController/Base/render#254-List-of-status-codes-and-their-symbols
+    render text: "Your are not authorized to perform this action", status: :unauthorized
   end
 end

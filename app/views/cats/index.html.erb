@@ -1,5 +1,23 @@
 <h1>Listing cats</h1>
 
+<% if current_cat %>
+  <h2>Hello <%= current_cat.name %></h2>
+  <p>
+    AJAX
+    <br>
+    <%# http://edgeguides.rubyonrails.org/working_with_javascript_in_rails.html %>
+    <%= link_to "Logout", logout_path, method: :delete, confirm: 'Logout?', remote: true %>
+  </p>
+  <p>
+    Non AJAX
+    <br>
+    <%= render "logout_form" %>
+    </p>
+<% else %>
+  <%# http://guides.rubyonrails.org/layouts_and_rendering.html#using-partials %>
+  <%= render "login_form" %>
+<% end %>
+
 <% if @cat_of_the_month %>
   <h2>Cat with more followers last month</h2>
   <p>
@@ -19,14 +37,20 @@
   </thead>
   <tbody>
     <% @cats.each do |cat| %>
-      <% cache(cat) do %>
-        <tr>
-          <td><%= link_to cat.name, cat_path(cat) %></td>
-          <td><%= localize_date cat.birthday %></td>
-          <td><%= cat.followers.count %></td>
-          <td><%= cat.followed_by.count %></td>
-          <td><%= link_to "Edit", edit_cat_path(cat) %></td>
-        </tr>
+      <% if policy(cat).show? %>
+          <tr>
+            <% cache(cat) do %>
+              <td><%= link_to cat.name, cat_path(cat) %></td>
+              <td><%= localize_date cat.birthday %></td>
+              <td><%= cat.followers.count %></td>
+              <td><%= cat.followed_by.count %></td>
+            <% end %>
+            <td>
+              <% if policy(cat).edit? %>
+                <%= link_to "Edit", edit_cat_path(cat) %>
+              <% end %>
+            </td>
+          </tr>
       <% end %>
     <% end %>
   </tbody>

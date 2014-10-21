@@ -17,6 +17,11 @@
     <%= c.label :birthday, "Birthday" %>
     <%= c.date_field :birthday, class: "form-control" %>
   </div>
+  <div class="checkbox">
+    <%= c.label :visible do %>
+      <%= c.check_box :visible %> Visible
+    <% end %>
+  </div>
 
   <%= c.submit "Edit cat info!", class: "btn btn-default" %>
 <% end %>

@@ -64,17 +64,20 @@ RSpec.describe CatsController, type: :controller do
       expect(assigns(:cat)).to eq(cat)
     end
 
-    it "renders 404 if cat non visible" do
+    it "renders 401 if cat non visible and loggedout" do
+      logout
+
       cat.update_attribute(:visible, false)
 
       get :show, id: cat
 
-      expect(response).to have_http_status(404)
+      expect(response).to have_http_status(401)
     end
   end
 
   describe "GET #edit" do
     let(:cat) { create(:cat, visible: true) }
+    before(:each) { login(cat) }
 
     it "responds successfully with an HTTP 200 status code if cat is visible" do
       get :edit, id: cat
@@ -93,17 +96,26 @@ RSpec.describe CatsController, type: :controller do
       expect(assigns(:cat)).to eq(cat)
     end
 
-    it "renders 404 if cat non visible" do
-      cat.update_attribute(:visible, false)
+    it "renders 401 if non valid editor" do
+      login(create(:cat))
 
       get :edit, id: cat
 
-      expect(response).to have_http_status(404)
+      expect(response).to have_http_status(401)
+    end
+
+    it "renders 401 if loggedout" do
+      logout
+
+      get :edit, id: cat
+
+      expect(response).to have_http_status(401)
     end
   end
 
   describe "PUT #update" do
     let(:cat) { create(:cat, visible: true) }
+    before(:each) { login(cat) }
 
     it "redirects to show if cat is successfully updated" do
       put :update, id: cat, cat: { name: "New name" }
@@ -124,12 +136,28 @@ RSpec.describe CatsController, type: :controller do
       expect(response).to render_template("edit")
     end
 
-    it "renders 404 if cat non visible" do
-      cat.update_attribute(:visible, false)
+    it "renders 401 if non valid editor" do
+      login(create(:cat))
 
       put :update, id: cat, cat: { name: "New name" }
 
-      expect(response).to have_http_status(404)
+      expect(response).to have_http_status(401)
     end
+
+    it "renders 401 if loggedout" do
+      logout
+
+      put :update, id: cat, cat: { name: "New name" }
+
+      expect(response).to have_http_status(401)
+    end
+  end
+
+  def login(cat)
+    session[:current_cat_id] = cat.id
+  end
+
+  def logout
+    session[:current_cat_id] = nil
   end
 end

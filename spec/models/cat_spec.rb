@@ -8,6 +8,20 @@ RSpec.describe Cat, type: :model do
       expect(cat.valid?).to be false
       expect(cat.errors[:name].present?).to be true
     end
+
+    it "validates presence of email" do
+      cat = build(:cat, email: nil)
+
+      expect(cat.valid?).to be false
+      expect(cat.errors[:email].present?).to be true
+    end
+
+    it "validates presence of password" do
+      cat = build(:cat, password: nil)
+
+      expect(cat.valid?).to be false
+      expect(cat.errors[:password].present?).to be true
+    end
   end
 
   describe "#followers association" do
@@ -18,7 +32,7 @@ RSpec.describe Cat, type: :model do
       followed2 = create(:follower_relation, cat: cat)
       create(:follower_relation, cat: cat, followed: create(:cat, visible: false))
 
-      expect(cat.followers.all).to eq([followed1.followed, followed2.followed])
+      expect(cat.followers.order("id ASC").all).to eq([followed1.followed, followed2.followed])
     end
   end
 
