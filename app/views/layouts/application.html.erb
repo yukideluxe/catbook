@@ -5,6 +5,17 @@
     <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
     <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
     <%= csrf_meta_tags %>
+      <nav>
+  <ul>
+    <%if current_cat %>
+      <li>Welcome, <%=current_cat.email%>! </li>
+      <li><%= link_to "View Profile", cat_path(current_cat) %></li> 
+      <li><%=link_to "Logout", logout_path %></li>
+    <%else%>
+      <li><%=link_to "Register", register_path %></li>
+      <li><%=link_to "Login", new_session_path %></li>
+    <%end%>
+  </ul>
   </head>
   <body>
     <div class="container">

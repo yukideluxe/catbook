@@ -2,6 +2,7 @@ class CatsController < ApplicationController
   before_action :load_cat_of_the_month, only: :index
   before_action :load_cat, except: :index
 
+
   def index
     page  = params[:page].to_i || 1
 
@@ -27,6 +28,12 @@ class CatsController < ApplicationController
 
       render :edit
     end
+  end
+
+  def destroy
+    cat= Cat.find(params[:id])
+    @cat.destroy
+    redirect_to root_path
   end
 
   private
