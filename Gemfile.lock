@@ -29,7 +29,6 @@ GEM
       tzinfo (~> 1.1)
     arel (5.0.1.20140414130214)
     bcrypt (3.1.7)
-    bower-rails (0.9.1)
     builder (3.2.2)
     byebug (2.7.0)
       columnize (~> 0.3)
@@ -159,7 +158,6 @@ PLATFORMS
 
 DEPENDENCIES
   bcrypt (~> 3.1.7)
-  bower-rails
   byebug
   coffee-rails (~> 4.0.0)
   delayed_job_active_record
