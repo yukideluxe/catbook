@@ -12,7 +12,7 @@ Step by step implementation
 4. Use Postgres as default database - [Configuring a Database - Rails Guides](http://guides.rubyonrails.org/configuring.html#configuring-a-database)
 5. Basic cat model ``rails generate model cat``
 6. Seed development database with fake data ``rake db:seed``
-7. Bower and boostrap - [Bower](https://github.com/42dev/bower-rails)
+7. Bower and boostrap - [Bower](http://bower.io/)
 8. Create basic scaffold for listing, editing and showing cats
   - Security pitfalls are on purpose included here in order the students to find them
   - Included kaminari pagination - [Kaminari](https://github.com/amatsuda/kaminari)
