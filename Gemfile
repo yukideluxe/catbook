@@ -43,6 +43,8 @@ gem 'whenever'
 
 gem 'delayed_job_active_record'
 
+gem 'rails_12factor'
+
 # Use unicorn as the app server
 # gem 'unicorn'
 
