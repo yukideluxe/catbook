@@ -42,6 +42,8 @@ gem 'bcrypt', '~> 3.1.7'
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
 
+gem 'whenever'
+
 group :development, :test do
   gem 'byebug'
   gem 'rspec-rails', '~> 3.0.0'

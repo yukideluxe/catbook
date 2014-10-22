@@ -6,10 +6,9 @@ class RegistrationsController < ApplicationController
 	def create
 		@cat = Cat.new(cat_params)
 		if @cat.save # will check password confirmation
-		      # User has been created
-		      # Log them in automatically
-		      session[:cat_id] = @cat.id
-		      redirect_to root_url
+				session[:cat_id] = @cat.id
+				CatMailer.welcome_email(@cat).deliver
+				redirect_to root_url
 		else
 		# There's been an error
 		render :new
