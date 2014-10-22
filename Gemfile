@@ -51,9 +51,10 @@ gem 'rails_12factor'
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
 
+gem 'faker'
+
 group :development, :test do
   gem 'byebug'
   gem 'rspec-rails', '~> 3.0.0'
   gem 'factory_girl_rails'
-  gem 'faker'
 end
