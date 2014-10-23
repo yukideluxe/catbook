@@ -1,3 +1,4 @@
+ruby '2.1.0'
 source 'https://rubygems.org'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
@@ -8,9 +9,6 @@ gem 'pg'
 
 # Pagination
 gem 'kaminari'
-
-# Bower
-gem "bower-rails"
 
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 4.0.3'
@@ -42,15 +40,18 @@ gem 'whenever'
 
 gem 'delayed_job_active_record'
 
+gem 'rails_12factor'
+
 # Use unicorn as the app server
 # gem 'unicorn'
 
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
 
+gem 'faker'
+
 group :development, :test do
   gem 'byebug'
   gem 'rspec-rails', '~> 3.0.0'
   gem 'factory_girl_rails'
-  gem 'faker'
 end
