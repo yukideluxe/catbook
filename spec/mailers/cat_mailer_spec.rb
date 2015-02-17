@@ -6,7 +6,7 @@ RSpec.describe CatMailer, type: :mailer do
 
     # http://guides.rubyonrails.org/testing.html#testing-your-mailers
     it "sends a welcome email for the specified cat" do
-      email = CatMailer.welcome(cat).deliver
+      email = CatMailer.welcome(cat).deliver_now
 
       expect(ActionMailer::Base.deliveries).not_to be_empty
 
