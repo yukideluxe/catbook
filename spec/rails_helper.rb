@@ -3,6 +3,8 @@ ENV["RAILS_ENV"] ||= 'test'
 require 'spec_helper'
 require File.expand_path("../../config/environment", __FILE__)
 require 'rspec/rails'
+# https://github.com/jnicklas/capybara#using-capybara-with-rspec
+require 'capybara/rspec'
 
 # Requires supporting ruby files with custom matchers and macros, etc, in
 # spec/support/ and its subdirectories. Files matching `spec/**/*_spec.rb` are
@@ -42,4 +44,33 @@ RSpec.configure do |config|
   # The different available types are documented in the features, such as in
   # https://relishapp.com/rspec/rspec-rails/docs
   config.infer_spec_type_from_file_location!
+
+  # https://github.com/DatabaseCleaner/database_cleaner
+  # http://www.bignerdranch.com/blog/reasonable-rspec-config-for-clean-and-slightly-faster-specs/
+  config.before :suite do
+    DatabaseCleaner.strategy = :transaction
+    DatabaseCleaner.clean_with :truncation
+  end
+
+  # Request specs cannot use a transaction because Capybara runs in a
+  # separate thread with a different database connection.
+  config.before type: :request do
+    DatabaseCleaner.strategy = :truncation
+  end
+
+  # Reset so other non-request specs don't have to deal with slow truncation.
+  config.after type: :request  do
+    DatabaseCleaner.strategy = :transaction
+  end
+
+  config.before do
+    DatabaseCleaner.start
+    ActionMailer::Base.deliveries.clear
+  end
+
+  config.after do
+    DatabaseCleaner.clean
+  end
+  Capybara.default_driver = :selenium
+
 end
