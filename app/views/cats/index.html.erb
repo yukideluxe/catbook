@@ -1,7 +1,7 @@
 <h1>Listing cats</h1>
 
 <% if current_cat %>
-  <h2>Hello <%= current_cat.name %></h2>
+  <h2><%= t(:welcome, name: current_cat.name) %></h2>
   <p>
     AJAX
     <br>
