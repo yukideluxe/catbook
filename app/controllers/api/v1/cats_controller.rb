@@ -5,6 +5,9 @@ module Api
       # http://en.wikibooks.org/wiki/Ruby_Programming/Syntax/Variables_and_Constants#Constants
       DEFAULT_FIELDS = %w{ name birthday followers_count followed_by_count links }
 
+      # http://leopard.in.ua/2012/07/08/using-cors-with-rails/
+      after_action :set_access_control_headers
+
       def index
         offset = params[:offset] || 0
         limit  = params[:limit]  || 10
@@ -63,6 +66,12 @@ module Api
         # http://apidock.com/rails/ActionController/Base/render#254-List-of-status-codes-and-their-symbols
         head :not_found
       end
+
+      def set_access_control_headers
+        headers['Access-Control-Allow-Origin'] = "*"
+        headers['Access-Control-Request-Method'] = "GET"
+      end
+
     end
   end
 end
