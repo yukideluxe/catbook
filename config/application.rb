@@ -33,5 +33,10 @@ module Catbook
       enable_starttls_auto: true,
       openssl_verify_mode:  'none'
     }
+
+    # https://gist.github.com/wojtha/8433843
+    # In order to see your custom exception pages go to config/development.rb
+    # and set config.consider_all_requests_local to false
+    config.exceptions_app = ->(env) { ExceptionsController.action(:show).call(env) }
   end
 end
